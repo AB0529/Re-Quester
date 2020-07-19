@@ -12,5 +12,5 @@ type ReURL struct {
 }
 
 func main() {
-	fmt.Println("Wadup nigga higga mugga shigga ")
+	fmt.Println("Nothing to see here")
 }
