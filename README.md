@@ -32,13 +32,13 @@ import (
 )
 
 func main() {
-	res, _ := Get("https://jsonplaceholder.typicode.com/todos/1")
-	defer res.Body.Close()
+    res, _ := Get("https://jsonplaceholder.typicode.com/todos/1")
+    defer res.Body.Close()
 
-	// Convert response to map
-	data, _ := BodyToMap(res.Body)
+    // Convert response to map
+    data, _ := BodyToMap(res.Body)
 
-	fmt.Println(data["id"]) // 1
+    fmt.Println(data["id"]) // 1
 }
 ```
 
