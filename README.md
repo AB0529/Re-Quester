@@ -53,17 +53,17 @@ import (
 )
 
 func main() {
-	sendData := map[string]string{
-		"title":  "Hello",
-		"body":   "Body",
-		"userId": "123",
-	}
-	res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", sendData))
+    sendData := map[string]string{
+        "title":  "Hello",
+        "body":   "Body",
+        "userId": "123",
+    }
+    res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", sendData))
     defer res.Body.Close()
-    
-    // Convert to map
-	data, _ := BodyToMap(res.Body)
 
-	fmt.Println(data)
+    // Convert to map
+    data, _ := BodyToMap(res.Body)
+
+    fmt.Println(data)
 }
 ```
