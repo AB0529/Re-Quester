@@ -65,6 +65,6 @@ func main() {
     // Convert to map
     data, _ := BodyToMap(res.Body)
 
-    fmt.Println(data)
+    fmt.Println(data["title"]) // Hello
 }
 ```
