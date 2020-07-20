@@ -5,16 +5,18 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"net/http"
 	"strings"
 )
+
+// ReBody the body type which will be sent empty interface to force user to use `SendBody` function
+type ReBody interface{}
 
 // SendBody passes a body to the url used for POST, DELETE etc. Only JSON is supported for now
 //
 // Parameters:
 //	- `t` string : the body type to pass into request only JSON is supported for now
 //	- `bod` interface{} : the body content to pass into request
-func SendBody(t string, bod interface{}) {
+func SendBody(t string, bod interface{}) (ReBody, error) {
 	// Check for supported types
 	switch strings.ToLower(t) {
 	case "json":
@@ -24,6 +26,8 @@ func SendBody(t string, bod interface{}) {
 			break
 		}
 	}
+
+	return nil, fmt.Errorf("error: could not convert to any types")
 }
 
 // BodyToMap will convert a net/http response body into a map
@@ -39,22 +43,23 @@ func BodyToMap(body io.ReadCloser) (map[string]interface{}, error) {
 	err := json.Unmarshal(data, &converted)
 
 	if err != nil {
-		return nil, fmt.Errorf("error: JSON decoder error:\n%s", err.Error())
+		return nil, fmt.Errorf("error: JSON decoder %s", err.Error())
 	}
 
+	defer body.Close()
 	return converted, nil
 }
 
 func main() {
-<<<<<<< HEAD
-	resp, err := http.Get("https://jsonplaceholder.typicode.com/todos/1")
+	res, _ := Get("https://jsonplaceholder.typicode.com/todos/1")
+	defer res.Body.Close()
+
+	// Convert response to map
+	data, err := BodyToMap(res.Body)
+
 	if err != nil {
 		panic(err)
 	}
-	defer resp.Body.Close()
 
-	return
-=======
-	fmt.Println("Nothing to see here")
->>>>>>> 57e6e321994fdc19ea3fd081892a690dca6f1ed7
+	fmt.Println(data["id"]) // 1
 }
