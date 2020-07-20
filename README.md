@@ -13,7 +13,10 @@ This is a simple wrapper for Go's `net/http` libary created with the purpose of 
 - `ReBody` - the body type which will be sent
 
 ```go
-type ReBody interface{}
+type ReBody struct {
+    ContentType string // The Content-Type of the header
+    Content io.Reader // Body to send to POST
+}
 ```
 
 # Examples
@@ -50,11 +53,17 @@ import (
 )
 
 func main() {
-    // Doesn't have to be map!
-    DataToPost := make(map[string][interface{}]) 
-    DataToPost = append(DataToPost["name"], "Bob")
+	sendData := map[string]string{
+		"title":  "Hello",
+		"body":   "Body",
+		"userId": "123",
+	}
+	res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", sendData))
+    defer res.Body.Close()
+    
+    // Convert to map
+	data, _ := BodyToMap(res.Body)
 
-    res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", DataToPost))
-    // ...
+	fmt.Println(data)
 }
 ```
