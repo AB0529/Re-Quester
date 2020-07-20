@@ -21,10 +21,10 @@ This is a simple wrapper for Go's **net/http** libary created with the purpose o
     - returns **(map[string]interface{}, error)**
 
 # Types
-- `ReBody` - the body type which will be sent
+- `ReBody` - the body type which will be sent, can be built with **SendBody()**
     - `ContentType string` - The content type header which will be sent i.e **application/json** (only json supported for now)
 
-    - `Content io.Reader` - The request body whicih will be sent, can be built manually or with **SendBody()**
+    - `Content io.Reader` - The request body whicih will be sent
 
     - `Headers []ReHeader` - The headers which will be sent to the request
 
