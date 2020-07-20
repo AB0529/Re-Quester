@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -9,25 +10,32 @@ import (
 )
 
 // ReBody the body type which will be sent empty interface to force user to use `SendBody` function
-type ReBody interface{}
+type ReBody struct {
+	ContentType string
+	Content     io.Reader
+}
 
 // SendBody passes a body to the url used for POST, DELETE etc. Only JSON is supported for now
 //
 // Parameters:
 //	- `t` string : the body type to pass into request only JSON is supported for now
 //	- `bod` interface{} : the body content to pass into request
-func SendBody(t string, bod interface{}) (ReBody, error) {
+func SendBody(t string, bod interface{}) ReBody {
 	// Check for supported types
 	switch strings.ToLower(t) {
 	case "json":
 		{
-			// TODO: Send JSON as body
-			fmt.Println("Type is json!")
-			break
-		}
-	}
+			requestBody, err := json.Marshal(bod)
 
-	return nil, fmt.Errorf("error: could not convert to any types")
+			if err != nil {
+				panic(err)
+			}
+
+			return ReBody{ContentType: "application/json", Content: bytes.NewBuffer(requestBody)}
+		}
+	default:
+		panic("error: could not convert to any types")
+	}
 }
 
 // BodyToMap will convert a net/http response body into a map
@@ -51,15 +59,14 @@ func BodyToMap(body io.ReadCloser) (map[string]interface{}, error) {
 }
 
 func main() {
-	res, _ := Get("https://jsonplaceholder.typicode.com/todos/1")
-	defer res.Body.Close()
-
-	// Convert response to map
-	data, err := BodyToMap(res.Body)
-
-	if err != nil {
-		panic(err)
+	sendData := map[string]string{
+		"title":  "Hello",
+		"body":   "Body",
+		"userId": "123",
 	}
+	res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", sendData))
+	defer res.Body.Close()
+	data, _ := BodyToMap(res.Body)
 
-	fmt.Println(data["id"]) // 1
+	fmt.Println(data)
 }
