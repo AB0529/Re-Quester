@@ -91,12 +91,11 @@ import (
 )
 
 func main() {
-    // Doesn't have to be map!
-    sendData := map[string]string{
-        "title":  "Hello",
-        "body":   "Body",
-        "userId": "123",
-    }
+    // Doesn't have to be a map!
+    dataToSend := map[string]string{"title":  "Hello", "body":   "Body", "userId": "123", }
+    headersToSend := ReHeader[]{ReHeader{"Cool-Key", "Epic-Value"}}
+
+    // Perform request
     res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", sendData, nil))
     defer res.Body.Close()
 
