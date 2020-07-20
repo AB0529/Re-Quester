@@ -50,7 +50,7 @@ dataToSend := map[string]string{
     "title":  "Hello",
     "body":   "Body",
     "userId": "123", }
-headersToSend := ReHeader[]{ReHeader{"Cool-Key", "Epic-Value"}}
+headersToSend := []ReHeader{ReHeader{"Cool-Key", "Epic-Value"}}
 
 // Construct body using SendBody, can be made manually as well!
 myBodyToSend := SendBody("json", dataToSend, headersToSend)
@@ -93,10 +93,10 @@ import (
 func main() {
     // Doesn't have to be a map!
     dataToSend := map[string]string{"title":  "Hello", "body":   "Body", "userId": "123", }
-    headersToSend := ReHeader[]{ReHeader{"Cool-Key", "Epic-Value"}}
+    headersToSend := []ReHeader{ReHeader{"Cool-Key", "Epic-Value"}}
 
     // Perform request
-    res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", sendData, nil))
+    res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", dataToSend, headersToSend))
     defer res.Body.Close()
 
     // Convert to map
