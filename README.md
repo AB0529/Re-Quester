@@ -53,6 +53,7 @@ import (
 )
 
 func main() {
+    // Doesn't have to be map!
     sendData := map[string]string{
         "title":  "Hello",
         "body":   "Body",
