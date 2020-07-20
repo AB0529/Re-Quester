@@ -9,24 +9,12 @@ import (
 	"strings"
 )
 
-// ReURL custom url definition
-//
-// Parameters:
-//	- `Host` string : the host of the url
-//	- `Port` string : the port of the url, will default to 80 if not provided
-//	- `UrlParams` map[string]string : the parameters to add to the url, will be empty if not provided (can be passed into host)
-type ReURL struct {
-	Host      string `json:"host"`
-	Port      string `json:":port"`
-	URLParams map[string]string
-}
-
-// Body passes a body to the url used for POST, DELETE etc. Only JSON is supported for now
+// SendBody passes a body to the url used for POST, DELETE etc. Only JSON is supported for now
 //
 // Parameters:
 //	- `t` string : the body type to pass into request only JSON is supported for now
 //	- `bod` interface{} : the body content to pass into request
-func (reurl *ReURL) Body(t string, bod interface{}) {
+func SendBody(t string, bod interface{}) {
 	// Check for supported types
 	switch strings.ToLower(t) {
 	case "json":
