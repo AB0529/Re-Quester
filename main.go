@@ -46,6 +46,7 @@ func BodyToMap(body io.ReadCloser) (map[string]interface{}, error) {
 }
 
 func main() {
+<<<<<<< HEAD
 	resp, err := http.Get("https://jsonplaceholder.typicode.com/todos/1")
 	if err != nil {
 		panic(err)
@@ -53,4 +54,7 @@ func main() {
 	defer resp.Body.Close()
 
 	return
+=======
+	fmt.Println("Nothing to see here")
+>>>>>>> 57e6e321994fdc19ea3fd081892a690dca6f1ed7
 }
