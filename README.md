@@ -4,7 +4,7 @@ This is a simple wrapper for Go's **net/http** libary created with the purpose o
 
 # Functions
 
-- `Get(url string)` - Will send a GET request to the url provided
+- `Get(url string, body ReBody)` - Will send a GET request to the url provided
 
     - returns **(\*http.Response, error)**
 
