@@ -49,7 +49,7 @@ import (
 
 func main() {
     // Doesn't have to be map!
-	DataToPost := make(map[string][interface{}]) 
+    DataToPost := make(map[string][interface{}]) 
     DataToPost = append(DataToPost["name"], "Bob")
 
     res, _ := Post("https://jsonplaceholder.typicode.com/posts", SendBody("json", DataToPost))
